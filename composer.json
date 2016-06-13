@@ -2,7 +2,7 @@
 	"name": "thunbolt/templates",
 	"type": "library",
 	"require": {
-		"thunbolt/thunbolt": "^1.0",
+		"thunbolt/thunbolt": "dev-master",
 		"webchemistry/utils": "~1.0.0"
 	},
 	"autoload": {
