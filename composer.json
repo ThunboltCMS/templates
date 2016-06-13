@@ -1,0 +1,13 @@
+{
+	"name": "thunbolt/templates",
+	"type": "library",
+	"require": {
+		"thunbolt/thunbolt": "^1.0",
+		"webchemistry/utils": "~1.0.0"
+	},
+	"autoload": {
+		"classmap": [
+			"src/"
+		]
+	}
+}
