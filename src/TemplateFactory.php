@@ -85,6 +85,11 @@ class TemplateFactory extends Nette\Bridges\ApplicationLatte\TemplateFactory imp
 
 		// filter loaders
 		$latte->addFilter(NULL, array($filters, 'load'));
+		if (!$this->translator) {
+			$latte->addFilter('translate', function ($s) { // void translator
+				return $s;
+			});
+		}
 
 		// macros
 		Macros::install($latte->getCompiler());
