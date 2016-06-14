@@ -6,17 +6,14 @@ use Kdyby\Translation\Translator;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\ITemplateFactory;
-use Nette\Object;
 use Nette;
 use Nette\Bridges\ApplicationLatte\ILatteFactory;
 use Nette\Application\UI;
 use Thunbolt\ICustomLayout;
-use Thunbolt\Templates\Macros;
 use WebChemistry\Assets\Manager;
 use WebChemistry\Images\AbstractStorage;
 use WebChemistry\Images\ImageStorageException;
 use WebChemistry\Parameters\Provider;
-use WebChemistry\Resource;
 
 class TemplateFactory extends Nette\Bridges\ApplicationLatte\TemplateFactory implements ITemplateFactory {
 
@@ -81,7 +78,7 @@ class TemplateFactory extends Nette\Bridges\ApplicationLatte\TemplateFactory imp
 
 		// macros
 		Macros::install($latte->getCompiler());
-		
+
 		// own parameters
 		if ($presenter instanceof ICustomLayout && ($path = $presenter->getComponentMacroDirPath()) != NULL) {
 			\ComponentMacro::install($latte, $path);
