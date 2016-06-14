@@ -17,7 +17,7 @@ class TemplateExtension extends CompilerExtension {
 		$builder = $this->getContainerBuilder();
 
 		$builder->getDefinition('latte.templateFactory')
-			->setClass('Thunbolt\Templates\TemplateFactory')
+			->setFactory('Thunbolt\Templates\TemplateFactory')
 			->addSetup('setAppDir', [$builder->parameters['appDir']]);
 	}
 

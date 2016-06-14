@@ -2,6 +2,8 @@
 
 namespace Thunbolt\Templates;
 
+use Kdyby\Translation\Latte\TranslateMacros;
+use Kdyby\Translation\TemplateHelpers;
 use Kdyby\Translation\Translator;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\ITemplate;
@@ -75,15 +77,21 @@ class TemplateFactory extends Nette\Bridges\ApplicationLatte\TemplateFactory imp
 		$presenter = $control ? $control->getPresenter(FALSE) : NULL;
 
 		// filters
+		$filters = new Filters();
 		$latte->addFilter('isImageExists', array($this, '_isImageExists'));
-		$latte->addFilter('date', array(Filters::class, 'date'));
-		$latte->addFilter('number', array(Filters::class, 'number'));
-		
+		$latte->addFilter('date', array($filters, 'date'));
+		$latte->addFilter('number', array($filters, 'number'));
+
 		// filter loaders
-		$latte->addFilter(NULL, array(Filters::class, 'load'));
+		$latte->addFilter(NULL, array($filters, 'load'));
+		if ($this->translator) {
+			$filter = new TemplateHelpers($this->translator);
+			$filter->register($latte);
+		}
 
 		// macros
 		Macros::install($latte->getCompiler());
+		TranslateMacros::install($latte->getCompiler());
 		$latte->addMacro('cacheFilter', new Cache());
 
 		// own parameters
