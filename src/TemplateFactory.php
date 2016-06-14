@@ -1,6 +1,6 @@
 <?php
 
-namespace WebChemistry\Template;
+namespace Thunbolt\Templates;
 
 use Kdyby\Translation\Translator;
 use Nette\Application\UI\Control;

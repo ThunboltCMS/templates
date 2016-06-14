@@ -10,14 +10,14 @@ class TemplateExtension extends CompilerExtension {
 		$builder = $this->getContainerBuilder();
 
 		$builder->addDefinition($this->prefix('templateCache'))
-			->setClass('Thunbolt\Template\TemplateCache');
+			->setClass('Thunbolt\Templates\TemplateCache');
 	}
 
 	public function beforeCompile() {
 		$builder = $this->getContainerBuilder();
 
 		$builder->getDefinition('latte.templateFactory')
-			->setClass('Thunbolt\Template\TemplateFactory')
+			->setClass('Thunbolt\Templates\TemplateFactory')
 			->addSetup('setAppDir', $builder->parameters['appDir']);
 	}
 
