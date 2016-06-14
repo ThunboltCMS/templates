@@ -11,6 +11,7 @@ use Nette\Bridges\ApplicationLatte\ILatteFactory;
 use Nette\Application\UI;
 use Thunbolt\ICustomLayout;
 use WebChemistry\Assets\Manager;
+use WebChemistry\Filter\Cache;
 use WebChemistry\Images\AbstractStorage;
 use WebChemistry\Images\ImageStorageException;
 use WebChemistry\Parameters\Provider;
@@ -75,9 +76,15 @@ class TemplateFactory extends Nette\Bridges\ApplicationLatte\TemplateFactory imp
 
 		// filters
 		$latte->addFilter('isImageExists', array($this, '_isImageExists'));
+		$latte->addFilter('date', array(Filters::class, 'date'));
+		$latte->addFilter('number', array(Filters::class, 'number'));
+		
+		// filter loaders
+		$latte->addFilter(NULL, array(Filters::class, 'load'));
 
 		// macros
 		Macros::install($latte->getCompiler());
+		$latte->addMacro('cacheFilter', new Cache());
 
 		// own parameters
 		if ($presenter instanceof ICustomLayout && ($path = $presenter->getComponentMacroDirPath()) != NULL) {
