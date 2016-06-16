@@ -5,6 +5,7 @@
 		"thunbolt/thunbolt": "dev-master",
 		"thunbolt/translation": "dev-master",
 		"webchemistry/utils": "~1.0",
+		"nette/application": "^2.4@RC",
 		"webchemistry/component-macro": "dev-master"
 	},
 	"autoload": {

@@ -44,7 +44,7 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 	/** @var string */
 	private $appDir;
 
-	/** @var \WebChemistry\Parameters\Provider */
+	/** @var Provider */
 	private $parametersProvider;
 
 	/** @var AbstractStorage */
@@ -62,7 +62,7 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 								AbstractStorage $imageStorage = NULL, ITranslator $translator = NULL,
 								Manager $assetsManager = NULL)
 	{
-		parent::__construct($latteFactory, $httpRequest, $httpResponse, $user, $cacheStorage);
+		parent::__construct($latteFactory, $httpRequest, $user, $cacheStorage);
 		$this->latteFactory = $latteFactory;
 		$this->httpRequest = $httpRequest;
 		$this->httpResponse = $httpResponse;
