@@ -3,7 +3,9 @@
 	"type": "library",
 	"require": {
 		"thunbolt/thunbolt": "dev-master",
-		"webchemistry/utils": "~1.0"
+		"thunbolt/translation": "dev-master",
+		"webchemistry/utils": "~1.0",
+		"webchemistry/component-macro": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

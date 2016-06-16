@@ -2,9 +2,9 @@
 
 namespace Thunbolt\Templates;
 
-use Nette, WebChemistry;
+use WebChemistry;
 
-class Filters extends Nette\Object {
+class Filters {
 
 	/** @var array */
 	public static $booleans = ['no', 'yes'];

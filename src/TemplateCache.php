@@ -4,11 +4,10 @@ namespace Thunbolt\Templates;
 
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
-use Nette\Object;
 
-class TemplateCache extends Object {
+class TemplateCache {
 
-	/** @var \Nette\Caching\Cache */
+	/** @var Cache */
 	private $cache;
 
 	/**
