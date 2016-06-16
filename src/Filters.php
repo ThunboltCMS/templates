@@ -81,22 +81,6 @@ class Filters {
 	}
 
 	/**
-	 * @param string $string
-	 * @return string
-	 */
-	public function entity_de($string) {
-		return html_entity_decode($string);
-	}
-
-	/**
-	 * @param string $string
-	 * @return string
-	 */
-	public function entity_en($string) {
-		return htmlentities($string);
-	}
-
-	/**
 	 * @param float|int $num
 	 * @param int $decimals
 	 * @param null $decPoint
@@ -116,17 +100,6 @@ class Filters {
 	 */
 	public function plural($s, $first, $second, $third) {
 		return $s == 1 ? $first : ($s < 5 && $s > 1 ? $second : $third);
-	}
-
-	/**
-	 * @param string $s
-	 * @param int $maxLen
-	 * @param string $append
-	 * @param bool $exact
-	 * @return string
-	 */
-	public function htmlTruncate($s, $maxLen, $append = "\xE2\x80\xA6", $exact = TRUE) {
-		return WebChemistry\Utils\Strings::htmlTruncate($s, $maxLen, $append, $exact);
 	}
 
 }
