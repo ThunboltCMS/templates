@@ -113,7 +113,7 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 		$template->imageStorage = $this->imageStorage;
 		$template->lang = new TranslationMediator($this->translator);
 		$template->assets = $this->assetsManager;
-		$template->assetsPath = $template->basePath . '/ins-assets';
+		$template->assetsPath = $template->basePath . '/mod-assets';
 
 		return $template;
 	}
