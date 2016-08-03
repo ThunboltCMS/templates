@@ -2,9 +2,6 @@
 
 namespace Thunbolt\Templates;
 
-use Kdyby\Translation\Latte\TranslateMacros;
-use Kdyby\Translation\TemplateHelpers;
-use Kdyby\Translation\Translator;
 use Nette\Caching\IStorage;
 use Nette\Http\IRequest;
 use Nette\Http\IResponse;
@@ -18,8 +15,7 @@ use Nette\Application\UI;
 use Nette\Security\User;
 use Thunbolt\Translation\TranslationMediator;
 use WebChemistry\Assets\Manager;
-use WebChemistry\Images\AbstractStorage;
-use WebChemistry\Images\ImageStorageException;
+use WebChemistry\Images\IImageStorage;
 use WebChemistry\Macros\ComponentMacro;
 use WebChemistry\Parameters\Provider;
 
@@ -46,7 +42,7 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 	/** @var Provider */
 	private $parametersProvider;
 
-	/** @var AbstractStorage */
+	/** @var IImageStorage */
 	private $imageStorage;
 
 	/** @var ITranslator */
@@ -58,7 +54,7 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 	public function __construct(ILatteFactory $latteFactory, IRequest $httpRequest = NULL,
 								IResponse $httpResponse = NULL, User $user = NULL,
 								IStorage $cacheStorage = NULL, Provider $parametersProvider = NULL,
-								AbstractStorage $imageStorage = NULL, ITranslator $translator = NULL,
+								IImageStorage $imageStorage = NULL, ITranslator $translator = NULL,
 								Manager $assetsManager = NULL)
 	{
 		parent::__construct($latteFactory, $httpRequest, $user, $cacheStorage);
