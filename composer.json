@@ -4,8 +4,7 @@
 	"require": {
 		"thunbolt/translation": "~1.0.0",
 		"webchemistry/utils": "~1.0",
-		"nette/application": "^2.4",
-		"webchemistry/component-macro": "dev-master"
+		"nette/application": "^2.4"
 	},
 	"autoload": {
 		"classmap": [

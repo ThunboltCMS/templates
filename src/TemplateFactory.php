@@ -18,7 +18,6 @@ use Nette\Application\UI;
 use Nette\Security\User;
 use Thunbolt\Translation\TranslationMediator;
 use WebChemistry\Assets\Manager;
-use WebChemistry\Filter\Cache;
 use WebChemistry\Images\AbstractStorage;
 use WebChemistry\Images\ImageStorageException;
 use WebChemistry\Macros\ComponentMacro;
@@ -84,7 +83,6 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 
 		// filters
 		$filters = new Filters();
-		$latte->addFilter('isImageExists', array($this, '_isImageExists'));
 		$latte->addFilter('date', array($filters, 'date'));
 		$latte->addFilter('number', array($filters, 'number'));
 
@@ -98,33 +96,27 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 
 		// macros
 		Macros::install($latte->getCompiler());
-		$latte->addMacro('cacheFilter', new Cache());
 
-		if ($presenter instanceof ICustomComponentMacro && ($path = $presenter->getComponentMacroDirectory()) != NULL) {
-			ComponentMacro::install($latte->getCompiler(), $path);
-		} else if ($presenter instanceof UI\Presenter && $this->appDir) {
-			ComponentMacro::install($latte->getCompiler(), $this->appDir . '/layouts/components/' . lcfirst($presenter->names['module']));
-		} else {
-			ComponentMacro::install($latte->getCompiler(), dirname($control->getReflection()->getFileName()) . '/components');
+		if (class_exists(ComponentMacro::class)) {
+			if ($presenter instanceof ICustomComponentMacro && ($path = $presenter->getComponentMacroDirectory()) != NULL) {
+				ComponentMacro::install($latte->getCompiler(), $path);
+			} else if ($presenter instanceof UI\Presenter && $this->appDir) {
+				ComponentMacro::install($latte->getCompiler(), $this->appDir . '/layouts/components/' . lcfirst($presenter->names['module']));
+			} else {
+				ComponentMacro::install($latte->getCompiler(), dirname($control->getReflection()->getFileName()) . '/components');
+			}
 		}
 
 		// parameters
 		$template->settings = $this->parametersProvider;
 		$template->imageStorage = $this->imageStorage;
-		$template->lang = new TranslationMediator($this->translator);
+		if ($this->translator instanceof \Kdyby\Translation\Translator) {
+			$template->lang = new TranslationMediator($this->translator);
+		}
 		$template->assets = $this->assetsManager;
 		$template->assetsPath = $template->basePath . '/mod-assets';
 
 		return $template;
-	}
-
-	/**
-	 * @param string $absoluteName
-	 * @return bool
-	 * @throws ImageStorageException
-	 */
-	public function _isImageExists($absoluteName) {
-		return $this->imageStorage->get($absoluteName)->isExists();
 	}
 
 	/**
