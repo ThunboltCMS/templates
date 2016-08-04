@@ -51,6 +51,9 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 	/** @var Manager */
 	private $assetsManager;
 
+	/** @var array */
+	public $onCreate = [];
+
 	public function __construct(ILatteFactory $latteFactory, IRequest $httpRequest = NULL,
 								IResponse $httpResponse = NULL, User $user = NULL,
 								IStorage $cacheStorage = NULL, Provider $parametersProvider = NULL,
@@ -111,6 +114,10 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 		}
 		$template->assets = $this->assetsManager;
 		$template->assetsPath = $template->basePath . '/mod-assets';
+
+		foreach ($this->onCreate as $callback) {
+			$callback($template, $control);
+		}
 
 		return $template;
 	}
