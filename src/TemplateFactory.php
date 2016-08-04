@@ -2,6 +2,7 @@
 
 namespace Thunbolt\Templates;
 
+use Nette\Application\IPresenter;
 use Nette\Caching\IStorage;
 use Nette\Http\IRequest;
 use Nette\Http\IResponse;
@@ -93,7 +94,7 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 		// macros
 		Macros::install($latte->getCompiler());
 
-		if (class_exists(ComponentMacro::class)) {
+		if (class_exists(ComponentMacro::class) && $control instanceof IPresenter) {
 			if ($presenter instanceof ICustomComponentMacro && ($path = $presenter->getComponentMacroDirectory()) != NULL) {
 				ComponentMacro::install($latte->getCompiler(), $path);
 			} else if ($presenter instanceof UI\Presenter && $this->appDir) {
