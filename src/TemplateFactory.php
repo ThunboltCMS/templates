@@ -51,7 +51,7 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 	/** @var Manager */
 	private $assetsManager;
 
-	/** @var array */
+	/** @var callable[] */
 	public $onCreate = [];
 
 	public function __construct(ILatteFactory $latteFactory, IRequest $httpRequest = NULL,
