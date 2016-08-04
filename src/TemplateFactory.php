@@ -12,7 +12,6 @@ use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\ITemplateFactory;
 use Nette\Bridges\ApplicationLatte;
 use Nette\Bridges\ApplicationLatte\ILatteFactory;
-use Nette\Application\UI;
 use Nette\Security\User;
 use Thunbolt\Translation\TranslationMediator;
 use WebChemistry\Assets\Manager;
@@ -95,12 +94,12 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 		Macros::install($latte->getCompiler());
 
 		if (class_exists(ComponentMacro::class) && $control instanceof IPresenter) {
-			if ($presenter instanceof ICustomComponentMacro && ($path = $presenter->getComponentMacroDirectory()) != NULL) {
-				ComponentMacro::install($latte->getCompiler(), $path);
-			} else if ($presenter instanceof UI\Presenter && $this->appDir) {
+			if (($ctrl = $control) instanceof ICustomComponentMacro || ($ctrl = $presenter) instanceof ICustomComponentMacro) {
+				if (($path = $ctrl->getComponentMacroDirectory()) !== NULL) {
+					ComponentMacro::install($latte->getCompiler(), $path);
+				}
+			} else if ($presenter instanceof IPresenter && $this->appDir) {
 				ComponentMacro::install($latte->getCompiler(), $this->appDir . '/layouts/components/' . lcfirst($presenter->names['module']));
-			} else {
-				ComponentMacro::install($latte->getCompiler(), dirname($control->getReflection()->getFileName()) . '/components');
 			}
 		}
 
