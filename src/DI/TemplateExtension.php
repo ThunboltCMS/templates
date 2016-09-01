@@ -12,7 +12,7 @@ class TemplateExtension extends CompilerExtension {
 
 		$builder->getDefinition('latte.templateFactory')
 			->setFactory(TemplateFactory::class)
-			->addSetup('setDirectories', [$builder->parameters['appDir'], $builder->parameters['plgAssetsDir']]);
+			->addSetup('setDirectories', [$builder->parameters['appDir']]);
 	}
 
 }
