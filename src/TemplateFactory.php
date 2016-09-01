@@ -13,11 +13,11 @@ use Nette\Application\UI\ITemplateFactory;
 use Nette\Bridges\ApplicationLatte;
 use Nette\Bridges\ApplicationLatte\ILatteFactory;
 use Nette\Security\User;
+use Thunbolt\Config\Config;
 use Thunbolt\Translation\TranslationMediator;
 use WebChemistry\Assets\Manager;
 use WebChemistry\Images\IImageStorage;
 use WebChemistry\Macros\ComponentMacro;
-use WebChemistry\Parameters\Provider;
 
 class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITemplateFactory {
 
@@ -39,9 +39,6 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 	/** @var string */
 	private $appDir;
 
-	/** @var Provider */
-	private $parametersProvider;
-
 	/** @var IImageStorage */
 	private $imageStorage;
 
@@ -54,9 +51,12 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 	/** @var callable[] */
 	public $onCreate = [];
 
+	/** @var Config */
+	private $config;
+
 	public function __construct(ILatteFactory $latteFactory, IRequest $httpRequest = NULL,
 								IResponse $httpResponse = NULL, User $user = NULL,
-								IStorage $cacheStorage = NULL, Provider $parametersProvider = NULL,
+								IStorage $cacheStorage = NULL, Config $config = NULL,
 								IImageStorage $imageStorage = NULL, ITranslator $translator = NULL,
 								Manager $assetsManager = NULL)
 	{
@@ -66,10 +66,10 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 		$this->httpResponse = $httpResponse;
 		$this->user = $user;
 		$this->cacheStorage = $cacheStorage;
-		$this->parametersProvider = $parametersProvider;
 		$this->imageStorage = $imageStorage;
 		$this->translator = $translator;
 		$this->assetsManager = $assetsManager;
+		$this->config = $config;
 	}
 
 	/**
@@ -107,13 +107,13 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 		}
 
 		// parameters
-		$template->settings = $this->parametersProvider;
+		$template->config = $this->config->getValues();
 		$template->imageStorage = $this->imageStorage;
 		if ($this->translator instanceof \Kdyby\Translation\Translator) {
 			$template->lang = new TranslationMediator($this->translator);
 		}
 		$template->assets = $this->assetsManager;
-		$template->assetsPath = $template->basePath . '/mod-assets';
+		$template->assetsPath = $template->basePath . '/plugins';
 
 		foreach ($this->onCreate as $callback) {
 			$callback($template, $control);
