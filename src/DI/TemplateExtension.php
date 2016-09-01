@@ -3,6 +3,7 @@
 namespace Thunbolt\Templates\DI;
 
 use Nette\DI\CompilerExtension;
+use Thunbolt\Templates\TemplateFactory;
 
 class TemplateExtension extends CompilerExtension {
 
@@ -10,8 +11,8 @@ class TemplateExtension extends CompilerExtension {
 		$builder = $this->getContainerBuilder();
 
 		$builder->getDefinition('latte.templateFactory')
-			->setFactory('Thunbolt\Templates\TemplateFactory')
-			->addSetup('setAppDir', [$builder->parameters['appDir']]);
+			->setFactory(TemplateFactory::class)
+			->addSetup('setDirectories', [$builder->parameters['appDir'], $builder->parameters['plgAssetsDir']]);
 	}
 
 }

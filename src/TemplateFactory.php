@@ -13,6 +13,7 @@ use Nette\Application\UI\ITemplateFactory;
 use Nette\Bridges\ApplicationLatte;
 use Nette\Bridges\ApplicationLatte\ILatteFactory;
 use Nette\Security\User;
+use Thunbolt\Composer\ComposerDirectories;
 use Thunbolt\Config\Config;
 use Thunbolt\Translation\TranslationMediator;
 use WebChemistry\Assets\Manager;
@@ -113,7 +114,9 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 			$template->lang = new TranslationMediator($this->translator);
 		}
 		$template->assets = $this->assetsManager;
-		$template->assetsPath = $template->basePath . '/plugins';
+		if (class_exists(ComposerDirectories::class)) {
+			$template->plgPath = $template->basePath . '/' . ComposerDirectories::PLG_RES_REL_DIR;
+		}
 
 		foreach ($this->onCreate as $callback) {
 			$callback($template, $control);
@@ -124,12 +127,9 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 
 	/**
 	 * @param string $appDir
-	 * @return TemplateFactory
 	 */
-	public function setAppDir($appDir) {
+	public function setDirectories($appDir) {
 		$this->appDir = $appDir;
-
-		return $this;
 	}
 
 }
