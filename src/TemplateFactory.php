@@ -107,7 +107,9 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 		}
 
 		// parameters
-		$template->config = $this->config->getValues();
+		if ($this->config) {
+			$template->config = $this->config->getValues();
+		}
 		$template->imageStorage = $this->imageStorage;
 		$template->assets = $this->assetsManager;
 		if (class_exists(ComposerDirectories::class)) {
