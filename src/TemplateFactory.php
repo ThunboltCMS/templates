@@ -110,9 +110,6 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 		// parameters
 		$template->config = $this->config->getValues();
 		$template->imageStorage = $this->imageStorage;
-		if ($this->translator instanceof \Kdyby\Translation\Translator) {
-			$template->lang = new TranslationMediator($this->translator);
-		}
 		$template->assets = $this->assetsManager;
 		if (class_exists(ComposerDirectories::class)) {
 			$template->plgPath = $template->basePath . '/' . ComposerDirectories::PLG_RES_REL_DIR;
