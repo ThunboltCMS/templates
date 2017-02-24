@@ -15,6 +15,7 @@ use Nette\Bridges\ApplicationLatte\ILatteFactory;
 use Nette\Security\User;
 use Thunbolt\Composer\ComposerDirectories;
 use Thunbolt\Config\Config;
+use Thunbolt\Localization\TranslatorProvider;
 use WebChemistry\Assets\AssetsManager;
 use WebChemistry\Images\IImageStorage;
 use WebChemistry\Macros\ComponentMacro;
@@ -57,7 +58,7 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 	public function __construct(ILatteFactory $latteFactory, IRequest $httpRequest = NULL,
 								IResponse $httpResponse = NULL, User $user = NULL,
 								IStorage $cacheStorage = NULL, Config $config = NULL,
-								IImageStorage $imageStorage = NULL, ITranslator $translator = NULL,
+								IImageStorage $imageStorage = NULL, TranslatorProvider $translatorProvider = NULL,
 								AssetsManager $assetsManager = NULL)
 	{
 		parent::__construct($latteFactory, $httpRequest, $user, $cacheStorage);
@@ -67,7 +68,7 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 		$this->user = $user;
 		$this->cacheStorage = $cacheStorage;
 		$this->imageStorage = $imageStorage;
-		$this->translator = $translator;
+		$this->translator = $translatorProvider->getTranslator();
 		$this->assetsManager = $assetsManager;
 		$this->config = $config;
 	}
@@ -87,11 +88,6 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 
 		// filter loaders
 		$latte->addFilter(NULL, array($filters, 'load'));
-		if (!$this->translator) {
-			$latte->addFilter('translate', function ($s) { // void translator
-				return $s;
-			});
-		}
 
 		// macros
 		Macros::install($latte->getCompiler());
@@ -107,6 +103,7 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 		}
 
 		// parameters
+		$template->setTranslator($this->translator);
 		if ($this->config) {
 			$template->config = $this->config->getValues();
 		}
