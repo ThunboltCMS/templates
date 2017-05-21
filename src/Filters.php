@@ -93,15 +93,4 @@ class Filters {
 		return WebChemistry\Utils\Strings::number($num, $decimals, $decPoint, $sepThousands);
 	}
 
-	/**
-	 * @param int $s
-	 * @param string $first
-	 * @param string $second
-	 * @param string $third
-	 * @return string
-	 */
-	public function plural(int $s, string $first, string $second, string $third): string {
-		return $s == 1 ? $first : ($s < 5 && $s > 1 ? $second : $third);
-	}
-
 }
