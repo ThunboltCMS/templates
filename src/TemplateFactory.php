@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thunbolt\Templates;
 
 use Nette\Application\IPresenter;
@@ -75,7 +77,7 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 	/**
 	 * @return ITemplate
 	 */
-	public function createTemplate(Control $control = NULL) {
+	public function createTemplate(Control $control = NULL): ITemplate {
 		$template = parent::createTemplate($control);
 		$latte = $template->getLatte();
 		$presenter = $control ? $control->getPresenter(FALSE) : NULL;
@@ -119,10 +121,7 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 		return $template;
 	}
 
-	/**
-	 * @param string $appDir
-	 */
-	public function setDirectories($appDir) {
+	public function setDirectories(string $appDir): void {
 		$this->appDir = $appDir;
 	}
 

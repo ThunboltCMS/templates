@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thunbolt\Templates;
 
 use WebChemistry;
@@ -20,7 +22,7 @@ class Filters {
 	 * @param int $month
 	 * @return string
 	 */
-	public function month($month) {
+	public function month(int $month): string {
 		return WebChemistry\Utils\DateTime::translateMonth($month);
 	}
 
@@ -28,7 +30,7 @@ class Filters {
 	 * @param int $day
 	 * @return string
 	 */
-	public function day($day) {
+	public function day(int $day): string {
 		return WebChemistry\Utils\DateTime::translateDay($day);
 	}
 
@@ -36,7 +38,7 @@ class Filters {
 	 * @param array|\Traversable $s
 	 * @return int
 	 */
-	public function count($s) {
+	public function count($s): int {
 		return $s instanceof \Traversable ? iterator_count($s) : count($s);
 	}
 
@@ -44,7 +46,7 @@ class Filters {
 	 * @param \DateTime|int $time
 	 * @return string
 	 */
-	public function timeAgo($time) {
+	public function timeAgo($time): string {
 		return WebChemistry\Utils\DateTime::timeAgo($time);
 	}
 
@@ -52,7 +54,7 @@ class Filters {
 	 * @param \DateTime|int $time
 	 * @return string
 	 */
-	public function datetime($time) {
+	public function datetime($time): string {
 		return WebChemistry\Utils\DateTime::toDateTime($time);
 	}
 
@@ -60,7 +62,7 @@ class Filters {
 	 * @param \DateTime|int $time
 	 * @return string
 	 */
-	public function date($time, $format = NULL) {
+	public function date($time, $format = NULL): string {
 		return WebChemistry\Utils\DateTime::toDate($time, $format);
 	}
 
@@ -68,26 +70,26 @@ class Filters {
 	 * @param \DateTime|int $time
 	 * @return string
 	 */
-	public function time($time) {
+	public function time($time): string {
 		return WebChemistry\Utils\DateTime::toTime($time);
 	}
 
 	/**
-	 * @param bool $boolean
+	 * @param bool|mixed $boolean
 	 * @return string
 	 */
-	public function bool($boolean) {
-		return self::$booleans[(int)((bool) $boolean)];
+	public function bool($boolean): string {
+		return self::$booleans[(int) $boolean];
 	}
 
 	/**
 	 * @param float|int $num
 	 * @param int $decimals
-	 * @param null $decPoint
-	 * @param null $sepThousands
+	 * @param string|null $decPoint
+	 * @param string|null $sepThousands
 	 * @return string
 	 */
-	public function number($num, $decimals = 0, $decPoint = NULL, $sepThousands = NULL) {
+	public function number($num, int $decimals = 0, string $decPoint = NULL, string $sepThousands = NULL): string {
 		return WebChemistry\Utils\Strings::number($num, $decimals, $decPoint, $sepThousands);
 	}
 
@@ -98,7 +100,7 @@ class Filters {
 	 * @param string $third
 	 * @return string
 	 */
-	public function plural($s, $first, $second, $third) {
+	public function plural(int $s, string $first, string $second, string $third): string {
 		return $s == 1 ? $first : ($s < 5 && $s > 1 ? $second : $third);
 	}
 

@@ -2,6 +2,7 @@
 	"name": "thunbolt/templates",
 	"type": "library",
 	"require": {
+		"php": ">=7.1",
 		"webchemistry/utils": "^1.0",
 		"nette/application": "^2.4"
 	},

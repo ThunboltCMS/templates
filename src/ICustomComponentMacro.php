@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thunbolt\Templates;
 
 interface ICustomComponentMacro {
@@ -9,6 +11,6 @@ interface ICustomComponentMacro {
 	 *
 	 * @return string
 	 */
-	public function getComponentMacroDirectory();
+	public function getComponentMacroDirectory(): string;
 
 }
