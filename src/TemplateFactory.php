@@ -63,6 +63,7 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 								AssetsManager $assetsManager = NULL)
 	{
 		parent::__construct($latteFactory, $httpRequest, $user, $cacheStorage);
+
 		$this->latteFactory = $latteFactory;
 		$this->httpRequest = $httpRequest;
 		$this->httpResponse = $httpResponse;
@@ -85,12 +86,12 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 		// macros
 		Macros::install($latte->getCompiler());
 
-		if (class_exists(ComponentMacro::class) && $control instanceof IPresenter) {
+		if ($this->appDir && class_exists(ComponentMacro::class) && $control instanceof IPresenter) {
 			if (($ctrl = $control) instanceof ICustomComponentMacro || ($ctrl = $presenter) instanceof ICustomComponentMacro) {
 				if (($path = $ctrl->getComponentMacroDirectory()) !== NULL) {
 					ComponentMacro::install($latte->getCompiler(), [$this->appDir . '/layouts/components/' . lcfirst($presenter->names['module']), $path]);
 				}
-			} else if ($presenter instanceof IPresenter && $this->appDir) {
+			} else if ($presenter instanceof IPresenter) {
 				ComponentMacro::install($latte->getCompiler(), [$this->appDir . '/layouts/components/' . lcfirst($presenter->names['module'])]);
 			}
 		}
