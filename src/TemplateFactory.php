@@ -104,7 +104,7 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 		$template->imageStorage = $this->imageStorage;
 		$template->assets = $this->assetsManager;
 		if (class_exists(ComposerDirectories::class)) {
-			$template->plgPath = $template->basePath . '/' . ComposerDirectories::PLG_RES_REL_DIR;
+			$template->pluginPath = $template->basePath . '/' . ComposerDirectories::PLUGIN_ASSETS_DIR;
 		}
 
 		foreach ($this->onCreate as $callback) {
