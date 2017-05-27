@@ -82,14 +82,6 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 		$latte = $template->getLatte();
 		$presenter = $control ? $control->getPresenter(FALSE) : NULL;
 
-		// filters
-		$filters = new Filters();
-		$latte->addFilter('date', array($filters, 'date'));
-		$latte->addFilter('number', array($filters, 'number'));
-
-		// filter loaders
-		$latte->addFilter(NULL, array($filters, 'load'));
-
 		// macros
 		Macros::install($latte->getCompiler());
 
