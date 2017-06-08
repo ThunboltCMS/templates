@@ -5,6 +5,14 @@
 		"php": ">=7.1",
 		"nette/application": "^2.4@dev"
 	},
+	"require-dev": {
+		"nette/di": "^2.3 || ^3.0",
+		"thunbolt/config": "^1.0",
+		"webchemistry/assets": "^2.0",
+		"latte/latte": "^2.3 || ^3.0",
+		"webchemistry/component-macro": "^2.0",
+		"nette/security": "^2.3 || ^3.0"
+	},
 	"autoload": {
 		"classmap": [
 			"src/"
