@@ -80,12 +80,12 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 		// macros
 		Macros::install($latte->getCompiler());
 
-		if ($this->appDir && class_exists(ComponentMacro::class) && $control instanceof IPresenter) {
-			if (($ctrl = $control) instanceof ICustomComponentMacro || ($ctrl = $presenter) instanceof ICustomComponentMacro) {
-				if (($path = $ctrl->getComponentMacroDirectory()) !== NULL) {
+		if ($this->appDir && class_exists(ComponentMacro::class) && $presenter instanceof IPresenter) {
+			if ($presenter instanceof ICustomComponentMacro) {
+				if (($path = $presenter->getComponentMacroDirectory()) !== NULL) {
 					ComponentMacro::install($latte->getCompiler(), [$this->appDir . '/layouts/components/' . lcfirst($presenter->names['module']), $path]);
 				}
-			} else if ($presenter instanceof IPresenter) {
+			} else {
 				ComponentMacro::install($latte->getCompiler(), [$this->appDir . '/layouts/components/' . lcfirst($presenter->names['module'])]);
 			}
 		}
