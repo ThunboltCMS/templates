@@ -18,7 +18,6 @@ use Nette\Security\User;
 use Thunbolt\Composer\ComposerDirectories;
 use Thunbolt\Config\Config;
 use WebChemistry\Assets\AssetsManager;
-use WebChemistry\Images\IImageStorage;
 use WebChemistry\Macros\ComponentMacro;
 
 class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITemplateFactory {
@@ -41,9 +40,6 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 	/** @var string */
 	private $appDir;
 
-	/** @var IImageStorage */
-	private $imageStorage;
-
 	/** @var ITranslator */
 	private $translator;
 
@@ -58,8 +54,7 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 
 	public function __construct(ILatteFactory $latteFactory, IRequest $httpRequest = NULL,
 								IResponse $httpResponse = NULL, User $user = NULL,
-								IStorage $cacheStorage = NULL, Config $config = NULL,
-								IImageStorage $imageStorage = NULL, ITranslator $translator = NULL,
+								IStorage $cacheStorage = NULL, Config $config = NULL, ITranslator $translator = NULL,
 								AssetsManager $assetsManager = NULL)
 	{
 		parent::__construct($latteFactory, $httpRequest, $user, $cacheStorage);
@@ -69,7 +64,6 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 		$this->httpResponse = $httpResponse;
 		$this->user = $user;
 		$this->cacheStorage = $cacheStorage;
-		$this->imageStorage = $imageStorage;
 		$this->translator = $translator;
 		$this->assetsManager = $assetsManager;
 		$this->config = $config;
@@ -101,7 +95,6 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 		if ($this->config) {
 			$template->config = $this->config->getValues();
 		}
-		$template->imageStorage = $this->imageStorage;
 
 		$latte->addProvider('assetsManager', $this->assetsManager);
 		if (class_exists(ComposerDirectories::class)) {
