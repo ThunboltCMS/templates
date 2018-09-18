@@ -43,19 +43,12 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 	/** @var ITranslator */
 	private $translator;
 
-	/** @var AssetsManager */
-	private $assetsManager;
-
-	/** @var callable[] */
-	public $onCreate = [];
-
 	/** @var IConfig */
 	private $config;
 
 	public function __construct(ILatteFactory $latteFactory, IRequest $httpRequest = NULL,
 								IResponse $httpResponse = NULL, User $user = NULL,
-								IStorage $cacheStorage = NULL, IConfig $config = NULL, ITranslator $translator = NULL,
-								AssetsManager $assetsManager = NULL)
+								IStorage $cacheStorage = NULL, IConfig $config = NULL, ITranslator $translator = NULL)
 	{
 		parent::__construct($latteFactory, $httpRequest, $user, $cacheStorage);
 
@@ -65,7 +58,6 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 		$this->user = $user;
 		$this->cacheStorage = $cacheStorage;
 		$this->translator = $translator;
-		$this->assetsManager = $assetsManager;
 		$this->config = $config;
 	}
 
@@ -80,29 +72,14 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 		// macros
 		Macros::install($latte->getCompiler());
 
-		if ($this->appDir && class_exists(ComponentMacro::class) && $presenter instanceof IPresenter) {
-			if ($presenter instanceof ICustomComponentMacro) {
-				if (($path = $presenter->getComponentMacroDirectory()) !== NULL) {
-					ComponentMacro::install($latte->getCompiler(), [$this->appDir . '/layouts/components/' . lcfirst($presenter->names['module']), $path]);
-				}
-			} else {
-				ComponentMacro::install($latte->getCompiler(), [$this->appDir . '/layouts/components/' . lcfirst($presenter->names['module'])]);
-			}
-		}
-
 		// parameters
 		$template->setTranslator($this->translator);
 		if ($this->config) {
 			$template->config = $this->config->getValues();
 		}
 
-		$latte->addProvider('assetsManager', $this->assetsManager);
 		if (class_exists(ComposerDirectories::class)) {
 			$template->pluginPath = $template->basePath . '/' . ComposerDirectories::PLUGIN_ASSETS_DIR;
-		}
-
-		foreach ($this->onCreate as $callback) {
-			$callback($template, $control);
 		}
 
 		return $template;
