@@ -16,7 +16,6 @@ use Nette\Bridges\ApplicationLatte;
 use Nette\Bridges\ApplicationLatte\ILatteFactory;
 use Nette\Security\User;
 use Thunbolt\Composer\ComposerDirectories;
-use Thunbolt\Config\IConfig;
 use WebChemistry\Assets\AssetsManager;
 use WebChemistry\Macros\ComponentMacro;
 
@@ -40,12 +39,9 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 	/** @var ITranslator */
 	private $translator;
 
-	/** @var IConfig */
-	private $config;
-
 	public function __construct(ILatteFactory $latteFactory, IRequest $httpRequest = NULL,
 								IResponse $httpResponse = NULL, User $user = NULL,
-								IStorage $cacheStorage = NULL, IConfig $config = NULL, ITranslator $translator = NULL)
+								IStorage $cacheStorage = NULL, ITranslator $translator = NULL)
 	{
 		parent::__construct($latteFactory, $httpRequest, $user, $cacheStorage);
 
@@ -63,11 +59,6 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 	 */
 	public function createTemplate(Control $control = NULL): ITemplate {
 		$template = parent::createTemplate($control);
-		$latte = $template->getLatte();
-		$presenter = $control ? $control->getPresenter(FALSE) : NULL;
-
-		// macros
-		Macros::install($latte->getCompiler());
 
 		// parameters
 		$template->setTranslator($this->translator);
