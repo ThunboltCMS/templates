@@ -14,14 +14,12 @@ class TemplateAdapter {
 		$this->translator = $translator;
 	}
 
-	public function create(ITemplate $template): ITemplate {
+	public function create(ITemplate $template): void {
 		$template->setTranslator($this->translator);
 
 		if (class_exists(ComposerDirectories::class)) {
 			$template->pluginPath = $template->basePath . '/' . ComposerDirectories::PLUGIN_ASSETS_DIR;
 		}
-
-		return $template;
 	}
 
 }
