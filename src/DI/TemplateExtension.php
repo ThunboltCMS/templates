@@ -19,9 +19,12 @@ class TemplateExtension extends CompilerExtension {
 
 	public function beforeCompile(): void {
 		$builder = $this->getContainerBuilder();
+		$helpers = new DIHelpers($this->getContainerBuilder());
 
 		$builder->getDefinition('latte.templateFactory')
 			->addSetup('?->onCreate[] = [?, "create"]', ['@self', $this->prefix('@templateAdapter')]);
+
+		$helpers->registerLatteMacroLoader(Macros::class);
 	}
 
 }

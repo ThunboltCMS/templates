@@ -11,7 +11,8 @@
 		"webchemistry/assets": "^2.0",
 		"latte/latte": "^2.3 || ^3.0",
 		"webchemistry/component-macro": "^2.0",
-		"nette/security": "^2.3 || ^3.0"
+		"nette/security": "^2.3 || ^3.0",
+		"webchemistry/utils": "^2.0"
 	},
 	"autoload": {
 		"classmap": [
