@@ -13,8 +13,7 @@ class TemplateExtension extends CompilerExtension {
 		$builder = $this->getContainerBuilder();
 
 		$builder->getDefinition('latte.templateFactory')
-			->setFactory(TemplateFactory::class)
-			->addSetup('setDirectories', [$builder->parameters['appDir']]);
+			->setFactory(TemplateFactory::class);
 	}
 
 }

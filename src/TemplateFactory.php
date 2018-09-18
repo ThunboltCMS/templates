@@ -37,9 +37,6 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 	/** @var IStorage */
 	private $cacheStorage;
 
-	/** @var string */
-	private $appDir;
-
 	/** @var ITranslator */
 	private $translator;
 
@@ -83,10 +80,6 @@ class TemplateFactory extends ApplicationLatte\TemplateFactory implements ITempl
 		}
 
 		return $template;
-	}
-
-	public function setDirectories(string $appDir): void {
-		$this->appDir = $appDir;
 	}
 
 }
