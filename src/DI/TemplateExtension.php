@@ -8,7 +8,7 @@ use Nette\DI\CompilerExtension;
 use Thunbolt\Templates\Macros;
 use Thunbolt\Templates\TemplateAdapter;
 use Thunbolt\Templates\TemplateFactory;
-use WebChemistry\Utils\DIHelpers;
+use WebChemistry\Utils\DI\DIHelpers;
 
 class TemplateExtension extends CompilerExtension {
 
