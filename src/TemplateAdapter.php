@@ -7,15 +7,17 @@ use Nette\Localization\ITranslator;
 
 class TemplateAdapter {
 
-	/** @var ITranslator */
+	/** @var ITranslator|null */
 	private $translator;
 
-	public function __construct(ITranslator $translator = null) {
+	public function __construct(?ITranslator $translator = null) {
 		$this->translator = $translator;
 	}
 
 	public function create(ITemplate $template): void {
-		$template->setTranslator($this->translator);
+		if ($this->translator) {
+			$template->setTranslator($this->translator);
+		}
 
 		if (class_exists(ComposerDirectories::class)) {
 			$template->pluginPath = $template->basePath . '/' . ComposerDirectories::PLUGIN_ASSETS_DIR;
