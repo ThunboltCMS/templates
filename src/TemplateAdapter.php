@@ -15,9 +15,7 @@ class TemplateAdapter {
 	}
 
 	public function create(ITemplate $template): void {
-		if ($this->translator) {
-			$template->setTranslator($this->translator);
-		}
+		$template->setTranslator($this->translator);
 
 		if (class_exists(ComposerDirectories::class)) {
 			$template->pluginPath = $template->basePath . '/' . ComposerDirectories::PLUGIN_ASSETS_DIR;
