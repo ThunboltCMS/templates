@@ -2,8 +2,8 @@
 	"name": "thunbolt/templates",
 	"type": "library",
 	"require": {
-		"php": ">=7.1",
-		"nette/application": "^2.4@dev"
+		"php": ">=7.2",
+		"nette/application": "^3.0"
 	},
 	"require-dev": {
 		"nette/di": "^2.3 || ^3.0",
