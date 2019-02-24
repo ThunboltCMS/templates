@@ -8,7 +8,6 @@ use Nette\DI\CompilerExtension;
 use Thunbolt\Templates\Macros;
 use Thunbolt\Templates\TemplateAdapter;
 use Thunbolt\Templates\TemplateFactory;
-use WebChemistry\Utils\DI\DIHelpers;
 
 class TemplateExtension extends CompilerExtension {
 
@@ -21,12 +20,13 @@ class TemplateExtension extends CompilerExtension {
 
 	public function beforeCompile(): void {
 		$builder = $this->getContainerBuilder();
-		$helpers = new DIHelpers($this->getContainerBuilder());
 
 		$builder->getDefinition('latte.templateFactory')
 			->addSetup('?->onCreate[] = [?, "create"]', ['@self', $this->prefix('@templateAdapter')]);
 
-		$helpers->registerLatteMacroLoader(Macros::class);
+		$builder->getDefinition('latte.latteFactory')
+			->getResultDefinition()
+				->addSetup('?->onCompile[] = function ($engine) { ' . Macros::class . '::install($engine->getCompiler()); }', ['@self']);
 	}
 
 }
